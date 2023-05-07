@@ -32,6 +32,20 @@ app.get('/api/items', (req:Request, res:Response)=>{
   res.json(items);
 })
 
+//route for items by category
+
+app.get('/items-by-category/:category/', (req: Request, res: Response) => {
+  const category = req.params.category;
+  const items = [
+    {id: 3, item_name: 'Apollo Running Short', img_url: './images/image1.png', price: 50, category: "Women"},
+    {id: 1, item_name: 'Apollo Running Short', img_url: './images/image.png', price: 50, category: "Women"},
+    {id: 5, item_name: 'Apollo Running Short', img_url: './images/image1.png', price: 50, category: "Men"},
+    {id: 4, item_name: 'Apollo Running Short', img_url: './images/image3.png', price: 50, category: "Kids"},
+  ].filter(item => item.category === category);
+  res.json(items);
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 })
