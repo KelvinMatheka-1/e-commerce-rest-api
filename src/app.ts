@@ -1,5 +1,8 @@
 import express, {Request, Response} from "express";
 
+//importing items stored in the product files
+import { products } from "./products";
+
 const app = express();
 
 //port
@@ -20,15 +23,6 @@ app.get('/api/categories', (req:Request, res:Response) => {
 
 //route for all products
 app.get('/api/items', (req:Request, res:Response)=>{
-  const products = [
-    {id: 1, item_name: 'Apollo Running Short', img_url: './images/image.png', price: 50, category: "Women"},
-    {id: 2, item_name: 'Apollo Running Short', img_url: './images/image3.png', price: 50,category: "Men"},
-    {id: 3, item_name: 'Apollo Running Short', img_url: './images/image1.png', price: 50, category: "Women"},
-    {id: 4, item_name: 'Apollo Running Short', img_url: './images/image3.png', price: 50, category: "Kids"},
-    {id: 5, item_name: 'Apollo Running Short', img_url: './images/image1.png', price: 50, category: "Men"},
-    {id: 6, item_name: 'Apollo Running Short', img_url: './images/image2.png', price: 50, category: "Kids"},
-    
-  ];
   res.json(products);
 })
 
@@ -36,15 +30,11 @@ app.get('/api/items', (req:Request, res:Response)=>{
 
 app.get('/items-by-category/:category/', (req: Request, res: Response) => {
   const category = req.params.category;
-  const products = [
-    {id: 3, item_name: 'Apollo Running Short', img_url: './images/image1.png', price: 50, category: "Women"},
-    {id: 1, item_name: 'Apollo Running Short', img_url: './images/image.png', price: 50, category: "Women"},
-    {id: 5, item_name: 'Apollo Running Short', img_url: './images/image1.png', price: 50, category: "Men"},
-    {id: 4, item_name: 'Apollo Running Short', img_url: './images/image3.png', price: 50, category: "Kids"},
-    
-//used filter method to select the items in the products array based on the category passed in the URL parameter
-  ].filter(item => item.category === category);
-  res.json(products);
+
+  //used filter method to select the items in the products array based on the category passed in the URL parameter
+
+  const productCategory = products.filter(item => item.category === category);
+  res.json(productCategory);
 });
 
 
