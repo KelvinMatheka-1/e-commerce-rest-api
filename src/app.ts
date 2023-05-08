@@ -44,7 +44,9 @@ app.get('/items-by-category/:category/', (req: Request, res: Response) => {
 app.post('/api/cart', (req: Request, res:Response) => {
   const item = req.body;
   cart.userCart.push(item);
-  cart.cartTotal += item.price;
+
+  //added parsInt to convert the value before it's added to cartTotal
+  cart.cartTotal += parseInt(item.price);
   res.json(cart.userCart)
 
 })
