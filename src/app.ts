@@ -4,8 +4,6 @@ import express, {Request, Response} from "express";
 import { products } from "./products";
 import { clearItemFromCart, cart } from "./cart";
 
-
-
 const app = express();
 
 //port
@@ -30,43 +28,36 @@ app.get('/api/items', (req:Request, res:Response)=>{
 })
 
 //route for products by category
-
 app.get('/items-by-category/:category/', (req: Request, res: Response) => {
   const category = req.params.category;
 
   //used filter method to select the items in the products array based on the category passed in the URL parameter
-
   const productCategory = products.filter(item => item.category === category);
   res.json(productCategory);
 });
 
-//route for adding items to cart
 app
-.route('/api/cart', )
-.post((req: Request, res:Response) => {
-  const item = req.body;
-  cart.userCart.push(item);
-  
-  //added parsInt to convert the value before it's added to cartTotal
-  cart.cartTotal += parseInt(item.price);
-  res.json(cart.userCart)
+  .route('/api/cart', )
 
-})
-//rout for retrieving the items in cart and the total sum
-.get((req:Request, res:Response)=>{
-  res.json(cart);
-})
+  //route for adding items to cart
+  .post((req: Request, res:Response) => {
+    const item = req.body;
+    cart.userCart.push(item);
+    cart.cartTotal += parseInt(item.price);
+    res.json(cart.userCart)
+  })
+  //route for retrieving the items in cart and the total sum
+  .get((req:Request, res:Response)=>{
+    res.json(cart);
+  })
 
 //route for clearing specific items from cart
-
 app.delete('/api/cart/:id', (req: Request, res: Response) => {
   const itemId = parseInt(req.params.id);
   clearItemFromCart(itemId);
   
   res.json(cart.userCart);
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
