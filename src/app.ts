@@ -11,7 +11,7 @@ const app = express();
 //port
 const PORT = 3000
 
-//json middleware
+// middleware to parse JSON data in the request body
 app.use(express.json());
 
 //route for available categories
@@ -41,17 +41,19 @@ app.get('/items-by-category/:category/', (req: Request, res: Response) => {
 });
 
 //route for adding items to cart
-app.post('/api/cart', (req: Request, res:Response) => {
+app
+.route('/api/cart', )
+.post((req: Request, res:Response) => {
   const item = req.body;
   cart.userCart.push(item);
-
+  
   //added parsInt to convert the value before it's added to cartTotal
   cart.cartTotal += parseInt(item.price);
   res.json(cart.userCart)
 
 })
 //rout for retrieving the items in cart and the total sum
-app.get('/api/cart', (req:Request, res:Response)=>{
+.get((req:Request, res:Response)=>{
   res.json(cart);
 })
 
