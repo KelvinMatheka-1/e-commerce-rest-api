@@ -2,6 +2,9 @@ import express, {Request, Response} from "express";
 
 //importing items stored in the product files
 import { products } from "./products";
+import { cart } from "./cart";
+
+
 
 const app = express();
 
@@ -36,6 +39,22 @@ app.get('/items-by-category/:category/', (req: Request, res: Response) => {
   const productCategory = products.filter(item => item.category === category);
   res.json(productCategory);
 });
+
+//route for adding items to cart
+app.post('/api/cart', (req: Request, res:Response) => {
+  const item = req.body;
+  cart.userCart.push(item);
+
+  //added parsInt to convert the value before it's added to cartTotal
+  cart.cartTotal += parseInt(item.price);
+  res.json(cart.userCart)
+
+})
+//rout for retrieving the items in cart and the total sum
+app.get('/api/cart', (req:Request, res:Response)=>{
+  res.json(cart);
+})
+
 
 
 app.listen(PORT, () => {
