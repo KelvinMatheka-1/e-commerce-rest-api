@@ -2,7 +2,7 @@ import express, {Request, Response} from "express";
 
 //importing items stored in the product files
 import { products } from "./products";
-import { cart } from "./cart";
+import { clearItemFromCart, cart } from "./cart";
 
 
 
@@ -54,6 +54,15 @@ app.post('/api/cart', (req: Request, res:Response) => {
 app.get('/api/cart', (req:Request, res:Response)=>{
   res.json(cart);
 })
+
+//route for clearing specific items from cart
+
+app.delete('/api/cart/:id', (req: Request, res: Response) => {
+  const itemId = parseInt(req.params.id);
+  clearItemFromCart(itemId);
+  
+  res.json(cart.userCart);
+});
 
 
 
