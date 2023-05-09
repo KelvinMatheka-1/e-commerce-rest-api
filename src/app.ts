@@ -64,7 +64,7 @@ app.delete('/api/cart/:id', (req: Request, res: Response) => {
 });
 
 //route for payment gateway and creating payment sessions with stripe
-app.post('/api/payment', async (req: Request, res: Response) => {
+app.post('/api/purchase', async (req: Request, res: Response) => {
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
