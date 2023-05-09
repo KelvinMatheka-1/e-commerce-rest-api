@@ -8,12 +8,14 @@ This is a REST API for an e-commerce website that provides the following feature
     -Adding products to a shopping cart
     -Removing products from a shopping cart
     -Retrieving the items in the shopping cart and the total sum
+    -Creating payment session for the current cart using stipe API
 
 Technologies Used:
 
     -Typescript
     -Node.js
     -express.js
+    -Stripe payment system
 
 
 Getting Started (To run the project locally, you need to have Node.js and npm installed. Then, follow the steps below )
@@ -45,3 +47,6 @@ You can use POSTMAN or Thunder Client to test the endpoints
 
     -DELETE /api/cart/:id
      Removes an item from the user's cart.
+
+    -POST /api/purchase
+     The endpoint creates a payment session for the current cart using the Stripe API.
