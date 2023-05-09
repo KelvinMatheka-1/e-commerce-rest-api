@@ -26,6 +26,13 @@ Getting Started (To run the project locally, you need to have Node.js and npm in
 
     The server will be listening on port 3000 by default(http://localhost:3000/). You can change the port by setting the PORT environment variable.
 
+STRIPE API
+
+    -To use the Stripe payment system, you need to create a Stripe account @ stripe.com.
+    -You can find your API keys in the Stripe Dashboard under the "Developers" section. You'll need to copy your "Publishable key" and "Secret key" and store them in a safe place. You'll use these keys to authenticate with the Stripe API.
+    -In app.ts Where stripe client is initialized, paste your secret key
+    -You can now use the Stripe API to create payment sessions.
+
 Endpoints
 
 You can use POSTMAN or Thunder Client to test the endpoints

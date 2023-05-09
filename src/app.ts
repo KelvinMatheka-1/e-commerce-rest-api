@@ -8,8 +8,8 @@ const app = express();
 //port
 const PORT = 3000
 
-//
-const stripe = new Stripe('sk_test_51N5ooYJFDKLRKydOj3xGnbzGMgitEbPGuJ59rM4W66XTMCQ0iyf1FCOP20Xr81neQIP48evcTzHykX41NSMfOiGV0069ZA2ijU', {
+//Initializing Stripe Client
+const stripe = new Stripe('YOUR STIPRE SECRET KEY', {
   apiVersion: '2022-11-15',
 });
 
