@@ -8,6 +8,7 @@ const app = express();
 //port
 const PORT = 3000
 
+//
 const stripe = new Stripe('sk_test_51N5ooYJFDKLRKydOj3xGnbzGMgitEbPGuJ59rM4W66XTMCQ0iyf1FCOP20Xr81neQIP48evcTzHykX41NSMfOiGV0069ZA2ijU', {
   apiVersion: '2022-11-15',
 });
@@ -62,7 +63,7 @@ app.delete('/api/cart/:id', (req: Request, res: Response) => {
   res.json(cart.userCart);
 });
 
-//route for payment gatway
+//route for payment gateway and creating payment sessions with stripe
 app.post('/api/payment', async (req: Request, res: Response) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -71,7 +72,7 @@ app.post('/api/payment', async (req: Request, res: Response) => {
         price_data: {
           currency: 'usd',
           product_data: {
-            name: itemInCart.name,
+            name: itemInCart.item_name,
           },
           unit_amount: itemInCart.price * 100,
         },
