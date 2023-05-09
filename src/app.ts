@@ -1,13 +1,16 @@
 import express, {Request, Response} from "express";
-
-//importing items stored in the product files
 import { products } from "./products";
 import { clearItemFromCart, cart } from "./cart";
+import { Stripe } from 'stripe';
 
 const app = express();
 
 //port
 const PORT = 3000
+
+const stripe = new Stripe('sk_test_51N5ooYJFDKLRKydOj3xGnbzGMgitEbPGuJ59rM4W66XTMCQ0iyf1FCOP20Xr81neQIP48evcTzHykX41NSMfOiGV0069ZA2ijU', {
+  apiVersion: '2022-11-15',
+});
 
 // middleware to parse JSON data in the request body
 app.use(express.json());
@@ -57,6 +60,33 @@ app.delete('/api/cart/:id', (req: Request, res: Response) => {
   clearItemFromCart(itemId);
   
   res.json(cart.userCart);
+});
+
+//route for payment gatway
+app.post('/api/payment', async (req: Request, res: Response) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: cart.userCart.map(itemInCart => ({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: itemInCart.name,
+          },
+          unit_amount: itemInCart.price * 100,
+        },
+        quantity: 1,
+      })),
+      mode: 'payment',
+      success_url: 'http://localhost:3000/payment/success',
+      cancel_url: 'http://localhost:3000/payment/cancel',
+    });
+
+    res.status(200).json(session);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'failed to create payment session' });
+  }
 });
 
 app.listen(PORT, () => {
