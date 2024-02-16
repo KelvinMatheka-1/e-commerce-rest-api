@@ -36,7 +36,7 @@ app.get('/items-by-category/:category/', (req: Request, res: Response) => {
   const category = req.params.category;
 
   //used filter method to select the items in the products array based on the category passed in the URL parameter
-  const productCategory = products.filter(item => item.category === category);
+  const productCategory = products.filter((item: { category: string; }) => item.category === category);
   res.json(productCategory);
 });
 
